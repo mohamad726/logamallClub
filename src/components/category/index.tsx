@@ -67,7 +67,7 @@ const Category = ({
 
   return (
     <div
-      className="flex flex-col items-center pt-[240px]  w-[1080px] h-[1920px]  bg-cover bg-center"
+      className="flex flex-col items-center h-screen w-full pt-60 bg-cover bg-center"
       style={{ backgroundImage: "url('/images/darak.jpg')" }}
     >
       <div className=" relative w-[858px] h-[192px] ">

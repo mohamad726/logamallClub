@@ -21,7 +21,7 @@ function End({
   return (
     <>
       <div
-        className="flex flex-col justify-center items-center pt-[240px]  w-[1080px] h-[1920px]  bg-cover bg-center"
+        className="flex flex-col justify-center items-center h-screen w-full pt-60 bg-cover bg-center"
         style={{ backgroundImage: "url('/images/2.jpg')" }}
       >
         <div className=" relative w-[614px] h-[297px] ">
@@ -35,18 +35,16 @@ function End({
         </div>
 
         <button
-        onClick={() => {
-          setStep(0);
-          playSound();
-          reset();
-        }}
-        className=" bf- bg-[#c9b3b3d9]  text-[#6950A1]  w-[303px] h-[88px] mt-[136px] rounded-lg text-4xl yekanBold  shadow-lg transition"
+          onClick={() => {
+            setStep(0);
+            playSound();
+            reset();
+          }}
+          className=" bf- bg-[#c9b3b3d9]  text-[#6950A1]  w-[303px] h-[88px] mt-[136px] rounded-lg text-4xl yekanBold  shadow-lg transition"
         >
-        بازگشت
-      </button>
+          بازگشت
+        </button>
       </div>
-
-
     </>
   );
 }

@@ -34,7 +34,7 @@ const Form = ({ onSubmit }: { onSubmit: SubmitHandler<FormData1> }) => {
       className="flex flex-col items-center h-screen w-full pt-60 bg-cover bg-center"
       style={{ backgroundImage: "url('/images/1.png')" }}
     >
-      <div className="relative w-[714px] h-[178px]">
+      <div className="relative w-[66%] h-[10%]">
         <Image
           src={'/images/Frame.svg'}
           layout="fill"
@@ -54,8 +54,8 @@ const Form = ({ onSubmit }: { onSubmit: SubmitHandler<FormData1> }) => {
         <FieldPersianName />
 
         {/* تاریخ تولد */}
-        <div className="relative shadow flex justify-between items-center w-[500px] h-[80px] bg-[#ffffffe6] text-2xl rounded-2xl py-6 px-4 text-[#6950A1] yekanBold">
-          <label className="whitespace-nowrap w-1/3 p-4">تاریخ تولد:</label>
+        <div className="relative shadow flex justify-between items-center w-full h-[80px] bg-[#ffffffe6] text-2xl rounded-2xl py-6 px-4 text-[#6950A1] yekanBold">
+          <label className="whitespace-nowrap w-1/2 p-4">تاریخ تولد:</label>
           <DatePicker
             onChange={handleDateChange}
             calendar={persian}

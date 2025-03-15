@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/', // آدرس سرور شما
-  timeout: 10000, // Timeout به مدت 10 ثانیه
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000', // در محیط توسعه از localhost و در Vercel از آدرس API استفاده شود
+  timeout: 10000,
 });
 
 export default api;

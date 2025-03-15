@@ -76,7 +76,7 @@ const Home = () => {
   };
   console.log(isSpecialUser);
   return (
-    <div className="flex justify-center  items-center w-full h-screen bg-gray-500">
+    <div className="flex justify-center  items-center w-full h-screen bg-gray-600">
       <FormProvider {...methods}>
         {isSpecialUser ? (
           <SpecialComponent

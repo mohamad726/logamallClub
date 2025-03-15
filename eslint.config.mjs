@@ -14,6 +14,7 @@ const eslintConfig = [
   {
     rules: {
       "@typescript-eslint/no-unused-vars": "off", // غیرفعال کردن قانون
+      '@typescript-eslint/no-require-imports': 'off', // غیرفعال کردن قانون require-imports
     },
   },
 ];

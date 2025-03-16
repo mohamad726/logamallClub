@@ -38,3 +38,11 @@
 .shadowItem {
   box-shadow: -4px 8px 8px rgba(0, 0, 0, 0.10);
 }
+
+.no-scrollbar::-webkit-scrollbar {
+
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

@@ -141,7 +141,7 @@ console.log(customerData)
   }
 
   return (
-    <div className="flex flex-col pt-20 items-center min-h-screen bg-gradient-to-r from-indigo-300 to-purple-400 p-8">
+    <div className="flex flex-col pt-20 items-center min-h-screen select-none bg-gradient-to-r from-indigo-300 to-purple-400 p-8">
       <h2 className="text-4xl font-bold text-white mb-8">
         خلاصه اطلاعات مشتریان
       </h2>
@@ -188,8 +188,8 @@ console.log(customerData)
         </div>
 
         {/* جدول اول */}
-        <div>
-          <h3 className="text-2xl font-semibold text-indigo-700 mb-4">
+        <div className='h-[700px] overflow-y-scroll '>
+          <h3 className="text-2xl font-semibold text-indigo-700 mb-4 ">
             مشخصات کلی مشتریان
           </h3>
           <table className="w-full table-auto border-collapse">
@@ -201,7 +201,7 @@ console.log(customerData)
                 <th className="px-4 py-3 text-center">دسته‌های انتخاب‌شده</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className='overflow-scroll h-20'>
               {filteredCustomerData.length > 0 ? (
                 filteredCustomerData.map((customer, index) => (
                   <tr
@@ -233,7 +233,7 @@ console.log(customerData)
         </div>
 
         {/* جدول دوم: گزارش دسته‌بندی */}
-        <div className="mt-8">
+        <div className="mt-8 h-[700px] overflow-y-scroll">
           <h3 className="text-2xl font-semibold text-green-700 mb-4">
             گزارش دسته‌بندی
           </h3>
@@ -274,7 +274,7 @@ console.log(customerData)
         </div>
 
         {/* جدول سوم: گزارش استان */}
-        <div className="mt-8">
+        <div className="mt-8 h-[700px] overflow-y-scroll ">
           <h3 className="text-2xl font-semibold text-red-700 mb-4">
             گزارش استان
           </h3>

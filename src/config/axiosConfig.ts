@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://jsonserver-peach.vercel.app/', // آدرس سرور شما
+  baseURL: 'http://localhost:5000/', // آدرس سرور شما
   timeout: 10000, // Timeout به مدت 10 ثانیه
 });
 

@@ -4,7 +4,7 @@ import { FormData1 } from '@/type/type';
 export const submitFormApi = async (data: FormData1) => {
   try {
     // ارسال درخواست POST به آدرس endpoint
-    const response = await api.post('/clup/', data);
+    const response = await api.post('/clup', data);
     return response.data; // برگرداندن داده‌های پاسخ به کامپوننت
   } catch (error) {
     console.error('خطا در ارسال داده‌ها:', error);

@@ -1,11 +1,7 @@
-import pool from '../../../../lib/db.mjs';
+import pool from '../../../lib/db.mjs';
 
 export default async function handler(req, res) {
   const { id } = req.query;
-
-  if (!id) {
-    return res.status(400).json({ error: 'Missing ID parameter' });
-  }
 
   if (req.method === 'GET') {
     try {
@@ -17,7 +13,7 @@ export default async function handler(req, res) {
 
       res.status(200).json(result.rows[0]);
     } catch (error) {
-      res.status(500).json({ error: 'Failed to fetch data from the database' });
+      res.status(500).json({ error: 'Failed to fetch data' });
     }
   } else if (req.method === 'PUT') {
     const { phone, full_name, province, birth_date, categories } = req.body;
@@ -34,7 +30,7 @@ export default async function handler(req, res) {
 
       res.status(200).json(result.rows[0]);
     } catch (error) {
-      res.status(500).json({ error: 'Failed to update data in the database' });
+      res.status(500).json({ error: 'Failed to update data' });
     }
   } else if (req.method === 'DELETE') {
     try {
@@ -46,7 +42,7 @@ export default async function handler(req, res) {
 
       res.status(200).json({ message: 'Record deleted successfully' });
     } catch (error) {
-      res.status(500).json({ error: 'Failed to delete data from the database' });
+      res.status(500).json({ error: 'Failed to delete data' });
     }
   } else {
     res.status(405).json({ error: 'Method Not Allowed' });

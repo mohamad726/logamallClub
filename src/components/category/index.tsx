@@ -31,7 +31,6 @@ const Category = ({
   const { setValue, watch, handleSubmit, reset } = useFormContext<FormData1>();
   const { data: updatedata } = useGetFormBuyPhone(watch('phone'));
   const soundRef = useRef<HTMLAudioElement | null>(null);
-console.log(updatedata)
   // مقدار اولیه دسته‌بندی‌های انتخابی بر اساس داده‌های قبلی
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
@@ -46,14 +45,14 @@ console.log(updatedata)
     }
   };
 
-  // وقتی `updatedata` تغییر کند، مقدار دسته‌بندی‌ها را تنظیم کن
   useEffect(() => {
+    console.log('Updated Data:', updatedata); // اینجا داده‌ها رو لاگ کن
     if (updatedata && updatedata.length > 0 && updatedata[0].categories) {
-      setSelectedCategories(updatedata[0].categories);
-      setValue('categories', updatedata[0].categories);
+      setSelectedCategories(updatedata[0].categories || []);
+      setValue('categories', updatedata[0].categories || []);
     }
   }, [updatedata, setValue]);
-
+  
   const toggleCategory = (category: string) => {
     const updatedCategories = selectedCategories.includes(category)
       ? selectedCategories.filter((c) => c !== category)

@@ -31,7 +31,7 @@ const Category = ({
   const { setValue, watch, handleSubmit, reset } = useFormContext<FormData1>();
   const { data: updatedata } = useGetFormBuyPhone(watch('phone'));
   const soundRef = useRef<HTMLAudioElement | null>(null);
-
+console.log(updatedata)
   // مقدار اولیه دسته‌بندی‌های انتخابی بر اساس داده‌های قبلی
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 

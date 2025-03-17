@@ -3,6 +3,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { useGetFormBuyPhone } from '../hooks';
 import Image from 'next/image';
+type UserData = {
+  id: string|number;
+  phone: string;
+  // سایر فیلدها...
+};
 
 const categories = [
   'لوازم خانه و آشپزخانه',
@@ -47,7 +52,7 @@ const Category = ({
     console.log('Updated Data:', updatedata); // برای دیباگ داده‌ها
 
     // جستجو برای شماره موبایل در داده‌ها
-    const existingUser = updatedata?.find((user) => user.phone === watch('phone'));
+    const existingUser = updatedata?.find((user: UserData) => user.phone === watch('phone'));
 
     if (existingUser && existingUser.categories) {
       setSelectedCategories(existingUser.categories);

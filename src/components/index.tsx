@@ -31,12 +31,7 @@ const Home = () => {
   useEffect(() => {
     soundRef.current = new Audio('/sound1.mp3'); // مسیر فایل صوتی در public
   }, []);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const onSubmit: SubmitHandler<FormData1> = async (data) => {
-    if (isSubmitting) return; // 👈 اگر درخواست قبلی در حال انجام است، منتظر بماند
-  
-    setIsSubmitting(true);
     setIsSpecialUser(false);
     setPhone(data.phone);
     playSound();
@@ -44,41 +39,42 @@ const Home = () => {
     if (data.phone === '09182975917') {
       setIsSpecialUser(true);
       setStep(2);
-    } else {
-      if (isLoading) {
-        console.log('در حال بارگذاری داده‌ها...');
-        setIsSubmitting(false);
-        return;
-      }
-  
-      if (updatedata && updatedata.length > 0) {
-        const userId = updatedata[0].id;
-        console.log(updatedata);
-        setStep(step + 1);
-  
-        await UpdateForm({
-          id: userId,
-          data: data,
-        });
-  
-        setIsSubmitting(false);
-        return; // 👈 از اجرای `POST` جلوگیری کن
-      }
-  
-      if (step < 1) {
-        setStep(step + 1);
-      } else {
-        try {
-          await mutate(data); // ارسال درخواست `POST`
-          console.log('داده‌ها با موفقیت ارسال شدند');
-          setStep(step + 1);
-        } catch (err) {
-          console.error('خطا در ارسال داده‌ها:', err);
-        }
-      }
+      return;
     }
   
-    setIsSubmitting(false); // بعد از ارسال درخواست، مقدار را `false` کن
+    if (isLoading) {
+      console.log('در حال بارگذاری داده‌ها...');
+      return;
+    }
+  
+    // بررسی وجود شماره موبایل در `updatedata`
+    const existingUser = updatedata?.find((user) => user.phone === data.phone);
+  
+    if (existingUser) {
+      // شماره موبایل در دیتابیس وجود دارد، پس باید `PUT` اجرا شود
+      console.log('شماره موبایل تکراری است. اطلاعات در حال ویرایش...');
+      setStep(step + 1);
+  
+      await UpdateForm({
+        id: existingUser.id,
+        data: data,
+      });
+  
+      return; // 👈 جلوگیری از اجرای `POST`
+    }
+  
+    // اگر شماره موبایل جدید باشد، درخواست `POST` ارسال شود
+    if (step < 1) {
+      setStep(step + 1);
+    } else {
+      try {
+        await mutate(data);
+        console.log('داده‌ها با موفقیت ارسال شدند');
+        setStep(step + 1);
+      } catch (err) {
+        console.error('خطا در ارسال داده‌ها:', err);
+      }
+    }
   };
   
   return (

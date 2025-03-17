@@ -36,7 +36,7 @@ export const getFormBuyPhoneApi = async (phone: string) => {
 export const updateClupApi = async (id:string, data: FormData1) => {
   try {
     // ارسال PUT به آدرس داینامیک با استفاده از `id`
-    const response = await api.put(`/clup/${id}`, data); // استفاده از `id` در URL
+    const response = await api.put(`/clup/clup/${id}`, data); // استفاده از `id` در URL
     return response.data;
   } catch (error) {
     console.error("Clup update failed:", error);

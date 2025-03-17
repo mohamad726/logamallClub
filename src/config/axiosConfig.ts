@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/', // آدرس سرور شما
+  baseURL: 'https://logamall-club-v3.vercel.app/', // آدرس سرور شما در ورسل
   timeout: 10000, // Timeout به مدت 10 ثانیه
 });
 

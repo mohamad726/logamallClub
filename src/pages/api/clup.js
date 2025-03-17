@@ -1,4 +1,4 @@
-import pool from '../../../db.mjs';
+import pool from '../../../lib/db.mjs';
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { phone, full_name, province, birth_date, categories } = req.body;

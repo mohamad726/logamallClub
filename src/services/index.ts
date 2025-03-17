@@ -3,13 +3,12 @@ import { FormData1 } from '@/type/type';
 
 export const submitFormApi = async (data: FormData1) => {
   try {
-    const response = await api.post('/clup', data, {
-      headers: { 'Content-Type': 'application/json' }
-    });
-    return response.data;
+    // ارسال درخواست POST به آدرس endpoint
+    const response = await api.post('/clup', data);
+    return response.data; // برگرداندن داده‌های پاسخ به کامپوننت
   } catch (error) {
-
-    throw error;
+    console.error('خطا در ارسال داده‌ها:', error);
+    throw error; // پرتاب خطا برای مدیریت در سطح کامپوننت
   }
 };
 

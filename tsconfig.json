@@ -27,7 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/pages/api/clup.js"
+    "lib/clup.js"
   ],
   "exclude": ["node_modules"]
 }

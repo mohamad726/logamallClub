@@ -49,14 +49,14 @@ const Home = () => {
       if (updatedata && updatedata.length > 0) {
         // اگر شماره موبایل تکراری باشد
         // آپدیت اطلاعات موجود
-      //  const userId = updatedata[0].id; // استخراج id از اولین عنصر داده‌ها
-       // console.log(updatedata);
-      //  setStep(step + 1);
+        const userId = updatedata[0].id; // استخراج id از اولین عنصر داده‌ها
+        console.log(updatedata);
+        setStep(step + 1);
         // ارسال `id` داینامیک و داده‌ها به سرور
-      //  UpdateForm({
-     //     id: userId, // استفاده از `id` داینامیک
-     //     data: data,
-       // });
+        UpdateForm({
+          id: userId, // استفاده از `id` داینامیک
+          data: data,
+        });
       } else {
         if (step < 1) {
           // اگر شماره موبایل جدید باشد، مرحله اول را نشان می‌دهیم

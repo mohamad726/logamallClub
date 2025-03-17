@@ -1,4 +1,4 @@
-import pool from '../../../../lib/db.mjs';
+import pool from '../../../lib/db.mjs';
 
 export default async function handler(req, res) {
   const { id } = req.query; // `id` رو از `req.query` بگیر

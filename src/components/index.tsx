@@ -11,7 +11,12 @@ import { FormData1 } from '@/type/type';
 const Home = () => {
   // ایجاد ref برای صدای تایپ
   const soundRef = useRef<HTMLAudioElement | null>(null);
-
+  type UserData = {
+    id: string|number;
+    phone: string;
+    // سایر فیلدها...
+  };
+  
   // تابع پخش صدا هنگام تایپ
 
   const [step, setStep] = useState<number>(0);
@@ -48,7 +53,8 @@ const Home = () => {
     }
   
     // بررسی وجود شماره موبایل در `updatedata`
-    const existingUser = updatedata?.find((user) => user.phone === data.phone);
+    const existingUser = updatedata?.find((user: UserData) => user.phone === data.phone);
+
   
     if (existingUser) {
       // شماره موبایل در دیتابیس وجود دارد، پس باید `PUT` اجرا شود

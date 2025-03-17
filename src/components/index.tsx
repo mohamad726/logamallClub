@@ -36,36 +36,41 @@ const Home = () => {
     setPhone(data.phone);
     playSound();
   
+    // بررسی شماره خاص (09182975917)
     if (data.phone === '09182975917') {
       setIsSpecialUser(true);
       setStep(2);
-      console.log("کاربر خاص شناسایی شد، ولی ارسال ادامه دارد...");
+      console.log("کاربر خاص است، نیازی به ارسال فرم ندارد");
+      return; // اینجا `return` کنیم که ادامه کد اجرا نشه
     }
   
     if (isLoading) {
-      console.log('در حال بارگذاری داده‌ها...');
+      console.log("در حال بارگذاری داده‌ها...");
       return;
     }
   
     if (updatedata && updatedata.length > 0) {
+      // **اگر کاربر قبلاً ثبت شده بود، فقط `PUT` را انجام بده**
       const userId = updatedata[0].id;
-      console.log("کاربر موجود است، در حال آپدیت...");
+      console.log("کاربر قبلاً وجود دارد، ارسال PUT...");
       setStep(step + 1);
-      UpdateForm({
+      return UpdateForm({
         id: userId,
         data: data,
       });
-    } else {
-      console.log("کاربر جدید است، در حال ارسال اطلاعات...");
-      try {
-        await mutate(data);
-        console.log('داده‌ها با موفقیت ارسال شدند');
-        setStep(step + 1);
-      } catch (err) {
-        console.error('خطا در ارسال داده‌ها:', err);
-      }
+    }
+  
+    // **در غیر این صورت، `POST` انجام بشه**
+    console.log("کاربر جدید است، ارسال POST...");
+    try {
+      await mutate(data);
+      console.log("داده‌ها با موفقیت ارسال شدند");
+      setStep(step + 1);
+    } catch (err) {
+      console.error("خطا در ارسال داده‌ها:", err);
     }
   };
+  
   console.log(isSpecialUser);
   return (
     <div className="flex justify-center  items-center w-full h-screen bg-gray-600">

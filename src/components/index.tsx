@@ -32,6 +32,7 @@ const Home = () => {
     soundRef.current = new Audio('/sound1.mp3'); // مسیر فایل صوتی در public
   }, []);
   const onSubmit: SubmitHandler<FormData1> = async (data) => {
+    updatedata('updatedata',updatedata)
     setIsSpecialUser(false);
     setPhone(data.phone);
     playSound();

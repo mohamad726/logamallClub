@@ -31,50 +31,56 @@ const Home = () => {
   useEffect(() => {
     soundRef.current = new Audio('/sound1.mp3'); // مسیر فایل صوتی در public
   }, []);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const onSubmit: SubmitHandler<FormData1> = async (data) => {
+    if (isSubmitting) return; // 👈 اگر درخواست قبلی در حال انجام است، منتظر بماند
+  
+    setIsSubmitting(true);
     setIsSpecialUser(false);
     setPhone(data.phone);
     playSound();
-    // بررسی شماره موبایل خاص (مثال: 09182975917)
+  
     if (data.phone === '09182975917') {
       setIsSpecialUser(true);
-      setStep(2); // هدایت به مرحله 2 برای کاربر خاص
+      setStep(2);
     } else {
-      // اگر داده‌ها هنوز در حال بارگذاری هستند، منتظر می‌مانیم
       if (isLoading) {
         console.log('در حال بارگذاری داده‌ها...');
+        setIsSubmitting(false);
         return;
       }
-
+  
       if (updatedata && updatedata.length > 0) {
-        // اگر شماره موبایل تکراری باشد
-        // آپدیت اطلاعات موجود
-        const userId = updatedata[0].id; // استخراج id از اولین عنصر داده‌ها
+        const userId = updatedata[0].id;
         console.log(updatedata);
         setStep(step + 1);
-        // ارسال `id` داینامیک و داده‌ها به سرور
-        UpdateForm({
-          id: userId, // استفاده از `id` داینامیک
+  
+        await UpdateForm({
+          id: userId,
           data: data,
         });
+  
+        setIsSubmitting(false);
+        return; // 👈 از اجرای `POST` جلوگیری کن
+      }
+  
+      if (step < 1) {
+        setStep(step + 1);
       } else {
-        if (step < 1) {
-          // اگر شماره موبایل جدید باشد، مرحله اول را نشان می‌دهیم
+        try {
+          await mutate(data); // ارسال درخواست `POST`
+          console.log('داده‌ها با موفقیت ارسال شدند');
           setStep(step + 1);
-        } else {
-          // شماره موبایل جدید است، ارسال درخواست
-          try {
-            await mutate(data); // ارسال درخواست برای شماره موبایل جدید
-            console.log('داده‌ها با موفقیت ارسال شدند');
-            setStep(step + 1); // تغییر مرحله
-          } catch (err) {
-            console.error('خطا در ارسال داده‌ها:', err);
-          }
+        } catch (err) {
+          console.error('خطا در ارسال داده‌ها:', err);
         }
       }
     }
+  
+    setIsSubmitting(false); // بعد از ارسال درخواست، مقدار را `false` کن
   };
-  console.log(isSpecialUser);
+  
   return (
     <div className="flex justify-center  items-center w-full h-screen bg-gray-600">
       <FormProvider {...methods}>

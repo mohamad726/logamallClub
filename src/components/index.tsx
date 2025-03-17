@@ -35,42 +35,34 @@ const Home = () => {
     setIsSpecialUser(false);
     setPhone(data.phone);
     playSound();
-    // بررسی شماره موبایل خاص (مثال: 09182975917)
+  
     if (data.phone === '09182975917') {
       setIsSpecialUser(true);
-      setStep(2); // هدایت به مرحله 2 برای کاربر خاص
+      setStep(2);
+      console.log("کاربر خاص شناسایی شد، ولی ارسال ادامه دارد...");
+    }
+  
+    if (isLoading) {
+      console.log('در حال بارگذاری داده‌ها...');
+      return;
+    }
+  
+    if (updatedata && updatedata.length > 0) {
+      const userId = updatedata[0].id;
+      console.log("کاربر موجود است، در حال آپدیت...");
+      setStep(step + 1);
+      UpdateForm({
+        id: userId,
+        data: data,
+      });
     } else {
-      // اگر داده‌ها هنوز در حال بارگذاری هستند، منتظر می‌مانیم
-      if (isLoading) {
-        console.log('در حال بارگذاری داده‌ها...');
-        return;
-      }
-
-      if (updatedata && updatedata.length > 0) {
-        // اگر شماره موبایل تکراری باشد
-        // آپدیت اطلاعات موجود
-        const userId = updatedata[0].id; // استخراج id از اولین عنصر داده‌ها
-        console.log(updatedata);
+      console.log("کاربر جدید است، در حال ارسال اطلاعات...");
+      try {
+        await mutate(data);
+        console.log('داده‌ها با موفقیت ارسال شدند');
         setStep(step + 1);
-        // ارسال `id` داینامیک و داده‌ها به سرور
-        UpdateForm({
-          id: userId, // استفاده از `id` داینامیک
-          data: data,
-        });
-      } else {
-        if (step < 1) {
-          // اگر شماره موبایل جدید باشد، مرحله اول را نشان می‌دهیم
-          setStep(step + 1);
-        } else {
-          // شماره موبایل جدید است، ارسال درخواست
-          try {
-            await mutate(data); // ارسال درخواست برای شماره موبایل جدید
-            console.log('داده‌ها با موفقیت ارسال شدند');
-            setStep(step + 1); // تغییر مرحله
-          } catch (err) {
-            console.error('خطا در ارسال داده‌ها:', err);
-          }
-        }
+      } catch (err) {
+        console.error('خطا در ارسال داده‌ها:', err);
       }
     }
   };

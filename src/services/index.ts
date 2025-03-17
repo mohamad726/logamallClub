@@ -3,14 +3,9 @@ import { FormData1 } from '@/type/type';
 
 export const submitFormApi = async (data: FormData1) => {
   try {
-    console.log('📤 ارسال درخواست به:', api.defaults.baseURL + 'clup');
-    console.log('📦 داده‌های ارسال‌شده:', data);
-
     const response = await api.post('/clup', data, {
       headers: { 'Content-Type': 'application/json' }
     });
-
-    console.log('✅ پاسخ دریافتی:', response.data);
     return response.data;
   } catch (error) {
 

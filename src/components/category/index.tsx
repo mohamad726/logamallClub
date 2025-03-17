@@ -29,28 +29,28 @@ const Category = ({
   setStep: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const { setValue, watch, handleSubmit, reset } = useFormContext<FormData1>();
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(
-    watch('categories') || []
-  );
   const { data: updatedata } = useGetFormBuyPhone(watch('phone'));
   const soundRef = useRef<HTMLAudioElement | null>(null);
+
+  // مقدار اولیه دسته‌بندی‌های انتخابی بر اساس داده‌های قبلی
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    soundRef.current = new Audio('/sound1.mp3');
+  }, []);
+
   const playSound = () => {
     if (soundRef.current) {
-      soundRef.current.currentTime = 0.5; // بازنشانی صدا برای پخش مجدد سریع
-      soundRef.current.play().catch(() => {}); // جلوگیری از خطای بلاک شدن در برخی مرورگرها
+      soundRef.current.currentTime = 0.5;
+      soundRef.current.play().catch(() => {});
     }
   };
 
-  useEffect(() => {
-    soundRef.current = new Audio('/sound1.mp3'); // بارگذاری فایل صوتی در زمان بارگذاری کامپوننت
-  }, []); // فقط یک‌بار در ابتدا بارگذاری می‌شود
-  // استفاده از useEffect برای بروزرسانی مقادیر پیش‌فرض دسته‌بندی‌ها
+  // وقتی `updatedata` تغییر کند، مقدار دسته‌بندی‌ها را تنظیم کن
   useEffect(() => {
     if (updatedata && updatedata.length > 0 && updatedata[0].categories) {
-      // اگر داده‌ها موجود باشند و دسته‌بندی‌ها داشته باشند
-
       setSelectedCategories(updatedata[0].categories);
-      setValue('categories', updatedata[0].categories); // بروزرسانی فیلد فرم
+      setValue('categories', updatedata[0].categories);
     }
   }, [updatedata, setValue]);
 
@@ -60,38 +60,35 @@ const Category = ({
       : [...selectedCategories, category];
 
     setSelectedCategories(updatedCategories);
-    setValue('categories', updatedCategories); // بروزرسانی فیلد فرم
-    playSound(); // فراخوانی برای پخش صدا
+    setValue('categories', updatedCategories);
+    playSound();
   };
-  console.log(updatedata); // برای دیباگ داده‌ها
 
   return (
     <div
       className="flex flex-col items-center h-screen w-full pt-60 bg-cover bg-center"
       style={{ backgroundImage: "url('/images/darak.jpg')" }}
     >
-      <div className=" relative w-[858px] h-[192px] ">
+      <div className="relative w-[858px] h-[192px]">
         <Image
           src={'/images/Frame.svg'}
           layout="fill"
           objectFit="contain"
-          alt={`Gallery Image`}
+          alt="Gallery Image"
           quality={100}
         />
       </div>
 
-
-
       {/* لیست دسته‌بندی‌ها */}
-      <div className="grid grid-cols-2 gap-x-10 gap-y-14 mt-[136px] ">
+      <div className="grid grid-cols-2 gap-x-10 gap-y-14 mt-[136px]">
         {categories.map((category) => (
           <button
             key={category}
             onClick={() => toggleCategory(category)}
-            className={` text-4xl text-center whitespace-nowrap shadowItem yekanBold rounded-lg shadow transition w-[443px] h-[80px] py-3 ${
+            className={`text-4xl text-center whitespace-nowrap shadowItem yekanBold rounded-lg shadow transition w-[443px] h-[80px] py-3 ${
               selectedCategories.includes(category)
                 ? 'bg-orange-500 text-white'
-                : 'bg-[#ffffffd9]  text-[#6950A1]'
+                : 'bg-[#ffffffd9] text-[#6950A1]'
             }`}
           >
             {category}
@@ -99,15 +96,14 @@ const Category = ({
         ))}
       </div>
 
-      <div className='flex flex-col '>
-
+      <div className="flex flex-col">
         {/* دکمه ثبت */}
         <button
           type="submit"
-          className={`w-[303px] h-[88px] mt-[136px] rounded-lg text-4xl yekanBold  shadow-lg transition ${
+          className={`w-[303px] h-[88px] mt-[136px] rounded-lg text-4xl yekanBold shadow-lg transition ${
             selectedCategories.length > 0
-              ? 'bg-orange-500 text-white '
-              : 'bg-[#e9e9e9c5]  text-[#6950A1] cursor-not-allowed'
+              ? 'bg-orange-500 text-white'
+              : 'bg-[#e9e9e9c5] text-[#6950A1] cursor-not-allowed'
           }`}
           disabled={selectedCategories.length === 0}
           onClick={handleSubmit(onSubmit)}
@@ -115,16 +111,17 @@ const Category = ({
           ثبت علاقه‌مندی‌ها
         </button>
 
+        {/* دکمه بازگشت */}
         <button
-        onClick={() => {
-          setStep(0);
-          playSound();
-          reset();
-        }}
-        className=" bf- bg-[#c9b3b3d9]  text-[#6950A1]  w-[303px] h-[88px] mt-[136px] rounded-lg text-4xl yekanBold  shadow-lg transition"
-      >
-        بازگشت
-      </button>
+          onClick={() => {
+            setStep(0);
+            playSound();
+            reset();
+          }}
+          className="bg-[#c9b3b3d9] text-[#6950A1] w-[303px] h-[88px] mt-[136px] rounded-lg text-4xl yekanBold shadow-lg transition"
+        >
+          بازگشت
+        </button>
       </div>
     </div>
   );

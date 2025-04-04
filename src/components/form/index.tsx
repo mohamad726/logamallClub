@@ -34,9 +34,9 @@ const Form = ({ onSubmit }: { onSubmit: SubmitHandler<FormData1> }) => {
       className="flex flex-col items-center h-screen w-full pt-60 bg-cover bg-center"
       style={{ backgroundImage: "url('/images/1.png')" }}
     >
-      <div className="relative w-[66%] h-[10%]">
+      <div className="relative w-[66%] h-[13%]">
         <Image
-          src={'/images/Frame.svg'}
+          src={'/images/Frame 2.svg'}
           layout="fill"
           objectFit="contain"
           alt="Gallery Image"
